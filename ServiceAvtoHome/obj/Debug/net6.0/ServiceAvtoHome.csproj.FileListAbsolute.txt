@@ -1,0 +1,15 @@
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\bin\Debug\net6.0\ServiceAvtoHome.exe
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\bin\Debug\net6.0\ServiceAvtoHome.deps.json
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\bin\Debug\net6.0\ServiceAvtoHome.runtimeconfig.json
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\bin\Debug\net6.0\ServiceAvtoHome.dll
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\bin\Debug\net6.0\ref\ServiceAvtoHome.dll
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\bin\Debug\net6.0\ServiceAvtoHome.pdb
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.csproj.AssemblyReference.cache
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.AssemblyInfoInputs.cache
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.AssemblyInfo.cs
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.csproj.CoreCompileInputs.cache
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.dll
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ref\ServiceAvtoHome.dll
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.pdb
+C:\Users\Acer\Desktop\проекты VS\ServiceAvtoHome\ServiceAvtoHome\obj\Debug\net6.0\ServiceAvtoHome.genruntimeconfig.cache

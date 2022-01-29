@@ -8,23 +8,23 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Acer\\.nuget\\packages\\": {},
+    "C:\\Users\\pc-3\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Acer\\Desktop\\проекты VS\\ServiceAvtoHome\\ServiceAvtoHome\\ServiceAvtoHome.csproj",
+      "projectUniqueName": "C:\\Users\\pc-3\\source\\repos\\ServiceAvtoHome\\ServiceAvtoHome\\ServiceAvtoHome.csproj",
       "projectName": "ServiceAvtoHome",
-      "projectPath": "C:\\Users\\Acer\\Desktop\\проекты VS\\ServiceAvtoHome\\ServiceAvtoHome\\ServiceAvtoHome.csproj",
-      "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Acer\\Desktop\\проекты VS\\ServiceAvtoHome\\ServiceAvtoHome\\obj\\",
+      "projectPath": "C:\\Users\\pc-3\\source\\repos\\ServiceAvtoHome\\ServiceAvtoHome\\ServiceAvtoHome.csproj",
+      "packagesPath": "C:\\Users\\pc-3\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\pc-3\\source\\repos\\ServiceAvtoHome\\ServiceAvtoHome\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pc-3\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

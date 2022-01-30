@@ -8,8 +8,10 @@ namespace ServiceAvto
         static void Main(string[] args)
         {
            
-            string? user, PoiskMarka, PoiskColor;
-            int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y;
+            string? user, PoiskMarka, PoiskColor, newMarka, newColor, newType;
+            int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y, newYearEdition, newPower, newCost;
+            int size = 10;
+           
             int[] YearEdition = new int[10];
             string[] Marka = new string[10];
             string[] Color = new string[10];
@@ -20,15 +22,16 @@ namespace ServiceAvto
             string[] masColor = { "Белый", "Черный", "Серебристый", "Красный", "Синий" };
             List<Avto> car = new List<Avto>();
             Random rand = new Random();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < size; i++)
             {
                 car.Add(new Avto { marka = masMarka[rand.Next(0, 12)], color = masColor[rand.Next(0, 4)], type = masType[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021), power = rand.Next(2, 6) * 50, cost = rand.Next(10, 30) * 1000});
                 Console.WriteLine(car[i].KomponovkaCar());
+               
              }
             
             while (true)
             {
-                Console.WriteLine("Введите Ваш статус \n администратор \n клиент \n STOP ");
+                Console.WriteLine("Введите Ваш статус \n администратор \n клиент \n СТОП ");
                 user = Console.ReadLine();
                 if (user.ToUpper() == "АДМИНИСТРАТОР")
                 {
@@ -37,39 +40,51 @@ namespace ServiceAvto
                     Console.WriteLine();
                     while (true)
                     {
-                        Console.WriteLine("Что необходимо сделать: \n 1 - Вывести на экран все имеющиеся авто на складе \n 2 - изменить цену авто \n 3 - выход");
+                        Console.WriteLine("Что необходимо сделать: \n 1 - Вывести на экран все имеющиеся авто на складе \n 2 - добавить авто в каталог \n 3 - изменить цену авто \n 4 - выход");
                         choice = Convert.ToInt32(Console.ReadLine());
                         if (choice == 1)
                         {
-                            for (int i = 0; i < 10; i++)
+                            for (int i = 0; i < size; i++)
                             {
-                                Console.WriteLine(i + 1 + "-е авто:");
-                                Console.WriteLine($"Марка авто {Marka[i]}");
-                                Console.WriteLine($"Год выпуска {YearEdition[i]}");
-                                Console.WriteLine($"Мощность {Power[i]} л.с.");
-                                Console.WriteLine($"Цвет {Color[i]}");
-                                Console.WriteLine($"Цена {Cost[i]} $");
-                                Console.WriteLine();
+                                Console.WriteLine(car[i].KomponovkaCar());
                             }
                         }
-                        if (choice == 2)
+                        if(choice == 2)
+                        {
+                            size++;
+                            Console.WriteLine("Введите марку авто ");
+                            newMarka = Console.ReadLine();
+                            Console.WriteLine("Введите тип кузова (Седан, Хэтчбек, Универсал, Купе, SUV) ");
+                            newType = Console.ReadLine();
+                            Console.WriteLine("Введите год выпуска ");
+                            newYearEdition = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите цвет авто (белый, черный, серебристый, красный, синий) ");
+                            newColor = Console.ReadLine();
+                            Console.WriteLine("Введите мощность (100-300 л.с.) ");
+                            newPower = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите цену авто ");
+                            newCost = Convert.ToInt32(Console.ReadLine());
+                            car.Add(new Avto { marka = newMarka, type=newType, color=newColor, power=newPower, yearEdition=newYearEdition,cost=newCost });
+                            Console.WriteLine("Добавлена новая машина в каталог\n"+car[size-1].KomponovkaCar());
+                        }
+                        if (choice == 3)
                         {
                             while (true)
                             {
                                 Console.WriteLine("Введите порядковый номер авто");
                                 nomerAvto = Convert.ToInt32(Console.ReadLine());
-                                if (nomerAvto < 1 || nomerAvto > 10)
+                                if (nomerAvto < 1 || nomerAvto > size)
                                 {
                                     Console.WriteLine("Неверный номер авто");
                                     continue;
                                 }
-                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + Cost[nomerAvto - 1] + "$ \n Введите новую цену ");
-                                Cost[nomerAvto - 1] = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + car[nomerAvto - 1].cost + "$ \n Введите новую цену ");
+                                car[nomerAvto - 1].cost = Convert.ToInt32(Console.ReadLine());
                                 break;
 
                             }
                         }
-                        if (choice == 3) break;
+                        if (choice == 4) break;
                     }
                 }
 
@@ -216,7 +231,7 @@ namespace ServiceAvto
                     }
 
                 }
-                if (user == "STOP" || user == "stop") break;
+                if (user.ToUpper() == "СТОП") break;
 
             }
 

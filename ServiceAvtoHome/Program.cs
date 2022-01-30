@@ -7,31 +7,30 @@ namespace ServiceAvto
     {
         static void Main(string[] args)
         {
+           
             string? user, PoiskMarka, PoiskColor;
-            int vybor, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y;
+            int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y;
             int[] YearEdition = new int[10];
             string[] Marka = new string[10];
             string[] Color = new string[10];
             int[] Power = new int[10];
             int[] Cost = new int[10];
-            string[] mas_Marka = { "FORD", "AUDI", "BMW", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "LEXUS", "FIAT", "RENAULT", "MERCEDES BENZ" };
-            string[] mas_type = { "седан", "хэтчбек", "универсал", "купе", "кроссовер" };
-            string[] mas_Color = { "белый", "черный", "серебристый", "красный", "синий" };
+            string[] masMarka = { "FORD", "AUDI", "BMW", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "LEXUS", "FIAT", "RENAULT", "MERCEDES BENZ" };
+            string[] masType = { "Седан", "Хэтчбек", "Универсал", "Купе", "SUV" };
+            string[] masColor = { "Белый", "Черный", "Серебристый", "Красный", "Синий" };
             List<Avto> car = new List<Avto>();
             Random rand = new Random();
             for (int i = 0; i < 10; i++)
             {
-                Power[i] = rand.Next(2, 6) * 50;
-                Marka[i] = mas_Marka[rand.Next(0, 12)];
-                car.Add(new Avto { color = mas_Color[rand.Next(0, 4)], type = mas_type[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021) });
-                Console.WriteLine(car[i].Print());
-                Cost[i] = rand.Next(10, 30) * 1000;
-            }
+                car.Add(new Avto { marka = masMarka[rand.Next(0, 12)], color = masColor[rand.Next(0, 4)], type = masType[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021), power = rand.Next(2, 6) * 50, cost = rand.Next(10, 30) * 1000});
+                Console.WriteLine(car[i].KomponovkaCar());
+             }
+            
             while (true)
             {
                 Console.WriteLine("Введите Ваш статус \n администратор \n клиент \n STOP ");
                 user = Console.ReadLine();
-                if (user == "Администратор" || user == "администратор")
+                if (user.ToUpper() == "АДМИНИСТРАТОР")
                 {
                     user = "admin";
                     Console.WriteLine($"Добрый день, {user}!");
@@ -39,8 +38,8 @@ namespace ServiceAvto
                     while (true)
                     {
                         Console.WriteLine("Что необходимо сделать: \n 1 - Вывести на экран все имеющиеся авто на складе \n 2 - изменить цену авто \n 3 - выход");
-                        vybor = Convert.ToInt32(Console.ReadLine());
-                        if (vybor == 1)
+                        choice = Convert.ToInt32(Console.ReadLine());
+                        if (choice == 1)
                         {
                             for (int i = 0; i < 10; i++)
                             {
@@ -53,7 +52,7 @@ namespace ServiceAvto
                                 Console.WriteLine();
                             }
                         }
-                        if (vybor == 2)
+                        if (choice == 2)
                         {
                             while (true)
                             {
@@ -70,11 +69,11 @@ namespace ServiceAvto
 
                             }
                         }
-                        if (vybor == 3) break;
+                        if (choice == 3) break;
                     }
                 }
 
-                if (user == "Клиент" || user == "клиент")
+                if (user.ToUpper() == "КЛИЕНТ")
                 {
                     Console.WriteLine("Как к Вам обращаться?");
                     user = Console.ReadLine();
@@ -82,9 +81,9 @@ namespace ServiceAvto
                     while (true)
                     {
                         Console.WriteLine($"{user}, по какому параметру будем искать авто: \n 1 - марка авто \n 2 - год выпуска (2000-2021) \n 3 - мощность в л.с.(100-300) \n 4 - цвет \n 5 - выход");
-                        vybor = Convert.ToInt32(Console.ReadLine());
+                        choice = Convert.ToInt32(Console.ReadLine());
                         x = 0; // счетчик
-                        if (vybor == 1)
+                        if (choice == 1)
                         {
                             Console.WriteLine("Введите марку авто (англ, заглавными буквами)");
                             PoiskMarka = Console.ReadLine();
@@ -106,7 +105,7 @@ namespace ServiceAvto
                             if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
 
                         }
-                        if (vybor == 2)
+                        if (choice == 2)
                         {
                             while (true)
                             {
@@ -142,7 +141,7 @@ namespace ServiceAvto
                             if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
 
                         }
-                        if (vybor == 3)
+                        if (choice == 3)
                         {
                             while (true)
                             {
@@ -178,7 +177,7 @@ namespace ServiceAvto
                             if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
 
                         }
-                        if (vybor == 4)
+                        if (choice == 4)
                         {
                             while (true)
                             {
@@ -187,7 +186,7 @@ namespace ServiceAvto
                                 PoiskColor = Console.ReadLine();
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    if (mas_Color[i] == PoiskColor)
+                                    if (masColor[i] == PoiskColor)
                                     {
                                         y = 1;
                                         break;
@@ -213,7 +212,7 @@ namespace ServiceAvto
                             if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
 
                         }
-                        if (vybor == 5) break;
+                        if (choice == 5) break;
                     }
 
                 }

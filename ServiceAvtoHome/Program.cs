@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceAvtoHome;
+using System;
 
 namespace ServiceAvto
 {
@@ -12,16 +13,18 @@ namespace ServiceAvto
             string[] Marka = new string[10];
             string[] Color = new string[10];
             int[] Power = new int[10];
-            int[] Cost = new int[10]; 
+            int[] Cost = new int[10];
             string[] mas_Marka = { "FORD", "AUDI", "BMW", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "LEXUS", "FIAT", "RENAULT", "MERCEDES BENZ" };
-            string[] mas_Color = { "белый", "черный", "серебристый", "красный" };
+            string[] mas_type = { "седан", "хэтчбек", "универсал", "купе", "кроссовер" };
+            string[] mas_Color = { "белый", "черный", "серебристый", "красный", "синий" };
+            List<Avto> car = new List<Avto>();
             Random rand = new Random();
-            for (int i=0; i<10; i++)
+            for (int i = 0; i < 10; i++)
             {
-                YearEdition[i] = rand.Next(2000, 2021);
-                Power[i] = rand.Next(2, 6)*50;
+                Power[i] = rand.Next(2, 6) * 50;
                 Marka[i] = mas_Marka[rand.Next(0, 12)];
-                Color[i] = mas_Color[rand.Next(0, 4)];
+                car.Add(new Avto { color = mas_Color[rand.Next(0, 4)], type = mas_type[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021) });
+                Console.WriteLine(car[i].Print());
                 Cost[i] = rand.Next(10, 30) * 1000;
             }
             while (true)
@@ -41,7 +44,7 @@ namespace ServiceAvto
                         {
                             for (int i = 0; i < 10; i++)
                             {
-                                Console.WriteLine(i+1 + "-е авто:");
+                                Console.WriteLine(i + 1 + "-е авто:");
                                 Console.WriteLine($"Марка авто {Marka[i]}");
                                 Console.WriteLine($"Год выпуска {YearEdition[i]}");
                                 Console.WriteLine($"Мощность {Power[i]} л.с.");
@@ -56,15 +59,15 @@ namespace ServiceAvto
                             {
                                 Console.WriteLine("Введите порядковый номер авто");
                                 nomerAvto = Convert.ToInt32(Console.ReadLine());
-                                if(nomerAvto<1 || nomerAvto>10)
+                                if (nomerAvto < 1 || nomerAvto > 10)
                                 {
                                     Console.WriteLine("Неверный номер авто");
                                     continue;
                                 }
-                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + Cost[nomerAvto-1] + "$ \n Введите новую цену ");
-                                Cost[nomerAvto-1] = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + Cost[nomerAvto - 1] + "$ \n Введите новую цену ");
+                                Cost[nomerAvto - 1] = Convert.ToInt32(Console.ReadLine());
                                 break;
-                               
+
                             }
                         }
                         if (vybor == 3) break;
@@ -82,26 +85,26 @@ namespace ServiceAvto
                         vybor = Convert.ToInt32(Console.ReadLine());
                         x = 0; // счетчик
                         if (vybor == 1)
-                        {   
-                               Console.WriteLine("Введите марку авто (англ, заглавными буквами)");
-                                PoiskMarka = Console.ReadLine();
-                                for (int i = 0; i < 10; i++)
+                        {
+                            Console.WriteLine("Введите марку авто (англ, заглавными буквами)");
+                            PoiskMarka = Console.ReadLine();
+                            for (int i = 0; i < 10; i++)
+                            {
+                                if (Marka[i] == PoiskMarka)
                                 {
-                                    if (Marka[i] == PoiskMarka)
-                                    {
-                                        Console.WriteLine();
-                                        Console.WriteLine("Найдено:");
-                                        Console.WriteLine($"Марка авто {Marka[i]}");
-                                        Console.WriteLine($"Год выпуска {YearEdition[i]}");
-                                        Console.WriteLine($"Мощность {Power[i]} л.с.");
-                                        Console.WriteLine($"Цвет {Color[i]}");
-                                        Console.WriteLine($"Цена {Cost[i]} $");
-                                        Console.WriteLine();
-                                        x++;
-                                    }
+                                    Console.WriteLine();
+                                    Console.WriteLine("Найдено:");
+                                    Console.WriteLine($"Марка авто {Marka[i]}");
+                                    Console.WriteLine($"Год выпуска {YearEdition[i]}");
+                                    Console.WriteLine($"Мощность {Power[i]} л.с.");
+                                    Console.WriteLine($"Цвет {Color[i]}");
+                                    Console.WriteLine($"Цена {Cost[i]} $");
+                                    Console.WriteLine();
+                                    x++;
                                 }
-                                if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
-                           
+                            }
+                            if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
+
                         }
                         if (vybor == 2)
                         {
@@ -119,7 +122,7 @@ namespace ServiceAvto
                                 break;
                             }
                             for (int i = yearEditionA; i < yearEditionB + 1; i++)
-                            { 
+                            {
                                 for (int j = 0; j < 10; j++)
                                 {
                                     if (YearEdition[j] == i)
@@ -182,7 +185,7 @@ namespace ServiceAvto
                                 y = 0;
                                 Console.WriteLine("Введите цвет авто (белый, черный, серебристый, красный)");
                                 PoiskColor = Console.ReadLine();
-                                for (int i=0; i<4; i++)
+                                for (int i = 0; i < 4; i++)
                                 {
                                     if (mas_Color[i] == PoiskColor)
                                     {
@@ -212,12 +215,12 @@ namespace ServiceAvto
                         }
                         if (vybor == 5) break;
                     }
-                   
+
                 }
                 if (user == "STOP" || user == "stop") break;
-              
+
             }
-        
+
 
         }
     }

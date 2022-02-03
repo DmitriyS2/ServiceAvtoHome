@@ -8,9 +8,9 @@ namespace ServiceAvtoHome
 {
     internal class Option
     {
-        public bool conditioner; // кондиционер
-        public bool heat; // подогрев
-        public bool navigation; // навигация
+        public string? conditioner; // кондиционер
+        public string? heat; // подогрев
+        public string? navigation; // навигация
         public string KomponovkaOption()
         {
             return "\nКондиционер " + conditioner + "\nЗимний пакет " + heat + "\nСистема навигации " + navigation + "\n";

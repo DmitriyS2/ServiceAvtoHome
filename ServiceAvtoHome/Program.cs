@@ -8,30 +8,32 @@ namespace ServiceAvto
         static void Main(string[] args)
         {
            
-            string? user, PoiskMarka, PoiskColor, newMarka, newColor, newType;
-            int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y, newYearEdition, newPower, newCost;
+            string? user, PoiskMarka, PoiskColor, newMarka, newColor, newType, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choise2;
+            int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y, newYearEdition, newPower, newCost, tempIndex, newRadius, z;
+            
+            // x - счетчик машин в выборе клиента; y - переменная для выхода из цикла проверки цвета; z - счетчик увеличения стоимости за доп.опции и колеса
+            // tempIndex - порядковый номер машины найденной клиентом в базе; choise2 - выбор да/нет
             int size = 10;
-           
-            int[] YearEdition = new int[10];
-            string[] Marka = new string[10];
-            string[] Color = new string[10];
-            int[] Power = new int[10];
-            int[] Cost = new int[10];
             string[] masMarka = { "FORD", "AUDI", "BMW", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "LEXUS", "FIAT", "RENAULT", "MERCEDES BENZ" };
-            string[] masType = { "Седан", "Хэтчбек", "Универсал", "Купе", "SUV" };
-            string[] masColor = { "Белый", "Черный", "Серебристый", "Красный", "Синий" };
+            string[] masType = { "СЕДАН", "ХЭТЧБЕК", "УНИВЕРСАЛ", "КУПЕ", "SUV" };
+            string[] masColor = { "БЕЛЫЙ", "ЧЕРНЫЙ", "СЕРЕБРИСТЫЙ", "КРАСНЫЙ", "СИНИЙ" };
             List<Avto> car = new List<Avto>();
+            List<Wheel> wheels = new List<Wheel>();
+            List<Option> options = new List<Option>();
             Random rand = new Random();
             for (int i = 0; i < size; i++)
             {
                 car.Add(new Avto { marka = masMarka[rand.Next(0, 12)], color = masColor[rand.Next(0, 4)], type = masType[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021), power = rand.Next(2, 6) * 50, cost = rand.Next(10, 30) * 1000});
-                Console.WriteLine(car[i].KomponovkaCar());
-               
+                wheels.Add(new Wheel { radius = 16, typeTyre = "ЛЕТО", typeDisk = "Штамп" });
+                options.Add(new Option { conditioner = "НЕТ", heat = "НЕТ",  navigation = "НЕТ" });
+                Console.WriteLine(car[i].KomponovkaCar(i+1));
+                Console.WriteLine(wheels[i].KomponovkaWheel());
+                Console.WriteLine(options[i].KomponovkaOption());
              }
             
             while (true)
             {
-                Console.WriteLine("Введите Ваш статус \n администратор \n клиент \n СТОП ");
+                Console.WriteLine("\nВведите Ваш статус \n администратор \n клиент \n СТОП ");
                 user = Console.ReadLine();
                 if (user.ToUpper() == "АДМИНИСТРАТОР")
                 {
@@ -46,7 +48,9 @@ namespace ServiceAvto
                         {
                             for (int i = 0; i < size; i++)
                             {
-                                Console.WriteLine(car[i].KomponovkaCar());
+                                Console.WriteLine(car[i].KomponovkaCar(i+1));
+                                Console.WriteLine(wheels[i].KomponovkaWheel());
+                                Console.WriteLine(options[i].KomponovkaOption());
                             }
                         }
                         if(choice == 2)
@@ -64,8 +68,24 @@ namespace ServiceAvto
                             newPower = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Введите цену авто ");
                             newCost = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Ведите радиус диска ");
+                            newRadius = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите тип диска (литой или штамп) ");
+                            newTypeDisk = Console.ReadLine();
+                            Console.WriteLine("Введите сезонность резины (зима или лето) ");
+                            newTypeTyre = Console.ReadLine();
+                            Console.WriteLine("Введите наличие кондиционера (да или нет) ");
+                            newConditioner = Console.ReadLine();
+                            Console.WriteLine("Введите наличие зимнего пакета (да или нет) ");
+                            newHeat = Console.ReadLine();
+                            Console.WriteLine("Введите наличие навигации (да или нет) ");
+                            newNavigation = Console.ReadLine();
+
                             car.Add(new Avto { marka = newMarka, type=newType, color=newColor, power=newPower, yearEdition=newYearEdition,cost=newCost });
-                            Console.WriteLine("Добавлена новая машина в каталог\n"+car[size-1].KomponovkaCar());
+                            Console.WriteLine("\nДобавлена новая машина в каталог\n"+car[size-1].KomponovkaCar(size));
+                            Console.WriteLine(wheels[size - 1].KomponovkaWheel());
+                            Console.WriteLine(options[size-1].KomponovkaOption());
+
                         }
                         if (choice == 3)
                         {
@@ -78,7 +98,7 @@ namespace ServiceAvto
                                     Console.WriteLine("Неверный номер авто");
                                     continue;
                                 }
-                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + car[nomerAvto - 1].cost + "$ \n Введите новую цену ");
+                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + car[nomerAvto - 1].cost + "$ \nВведите новую цену ");
                                 car[nomerAvto - 1].cost = Convert.ToInt32(Console.ReadLine());
                                 break;
 
@@ -97,27 +117,24 @@ namespace ServiceAvto
                     {
                         Console.WriteLine($"{user}, по какому параметру будем искать авто: \n 1 - марка авто \n 2 - год выпуска (2000-2021) \n 3 - мощность в л.с.(100-300) \n 4 - цвет \n 5 - выход");
                         choice = Convert.ToInt32(Console.ReadLine());
-                        x = 0; // счетчик
+                        x = 0;
+                        y = 0;
+                        z = 0;
+                        tempIndex = 0;
                         if (choice == 1)
                         {
                             Console.WriteLine("Введите марку авто (англ, заглавными буквами)");
                             PoiskMarka = Console.ReadLine();
-                            for (int i = 0; i < 10; i++)
+                            for (int i = 0; i < size; i++)
                             {
-                                if (Marka[i] == PoiskMarka)
+                                if (PoiskMarka.ToUpper() == car[i].marka)
                                 {
-                                    Console.WriteLine();
-                                    Console.WriteLine("Найдено:");
-                                    Console.WriteLine($"Марка авто {Marka[i]}");
-                                    Console.WriteLine($"Год выпуска {YearEdition[i]}");
-                                    Console.WriteLine($"Мощность {Power[i]} л.с.");
-                                    Console.WriteLine($"Цвет {Color[i]}");
-                                    Console.WriteLine($"Цена {Cost[i]} $");
-                                    Console.WriteLine();
+                                    tempIndex = i+1;
+                                    Console.WriteLine(car[i].KomponovkaCar(i+1));
                                     x++;
                                 }
                             }
-                            if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
+                           
 
                         }
                         if (choice == 2)
@@ -137,23 +154,17 @@ namespace ServiceAvto
                             }
                             for (int i = yearEditionA; i < yearEditionB + 1; i++)
                             {
-                                for (int j = 0; j < 10; j++)
+                                for (int j = 0; j < size; j++)
                                 {
-                                    if (YearEdition[j] == i)
+                                    if (car[i].yearEdition == i)
                                     {
-                                        Console.WriteLine();
-                                        Console.WriteLine("Найдено:");
-                                        Console.WriteLine($"Марка авто {Marka[j]}");
-                                        Console.WriteLine($"Год выпуска {YearEdition[j]}");
-                                        Console.WriteLine($"Мощность {Power[j]} л.с.");
-                                        Console.WriteLine($"Цвет {Color[j]}");
-                                        Console.WriteLine($"Цена {Cost[j]} $");
-                                        Console.WriteLine();
+                                        tempIndex = i + 1;
+                                        Console.WriteLine(car[i].KomponovkaCar(i+1));
                                         x++;
                                     }
                                 }
                             }
-                            if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
+                            
 
                         }
                         if (choice == 3)
@@ -173,58 +184,114 @@ namespace ServiceAvto
                             }
                             for (int i = powerA; i < powerB + 1; i++)
                             {
-                                for (int j = 0; j < 10; j++)
+                                for (int j = 0; j < size; j++)
                                 {
-                                    if (Power[j] == i)
+                                    if (car[i].power == i)
                                     {
-                                        Console.WriteLine();
-                                        Console.WriteLine("Найдено:");
-                                        Console.WriteLine($"Марка авто {Marka[j]}");
-                                        Console.WriteLine($"Год выпуска {YearEdition[j]}");
-                                        Console.WriteLine($"Мощность {Power[j]} л.с.");
-                                        Console.WriteLine($"Цвет {Color[j]}");
-                                        Console.WriteLine($"Цена {Cost[j]} $");
-                                        Console.WriteLine();
+                                        tempIndex = i + 1;
+                                        Console.WriteLine(car[i].KomponovkaCar(i+1));
                                         x++;
                                     }
                                 }
                             }
-                            if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
+                          
 
                         }
                         if (choice == 4)
                         {
                             while (true)
                             {
-                                y = 0;
-                                Console.WriteLine("Введите цвет авто (белый, черный, серебристый, красный)");
+                                Console.WriteLine("Введите цвет авто (белый, черный, серебристый, красный, синий)");
                                 PoiskColor = Console.ReadLine();
-                                for (int i = 0; i < 4; i++)
+                                for (int i = 0; i < 5; i++)
                                 {
-                                    if (masColor[i] == PoiskColor)
+                                    if (masColor[i] == PoiskColor.ToUpper())
                                     {
                                         y = 1;
                                         break;
                                     }
                                 }
                                 if (y == 1) break;
+                               
                             }
-                            for (int i = 0; i < 10; i++)
+                            for (int i = 0; i < size; i++)
                             {
-                                if (Color[i] == PoiskColor)
+                                if (car[i].color == PoiskColor.ToUpper())
                                 {
-                                    Console.WriteLine();
-                                    Console.WriteLine("Найдено:");
-                                    Console.WriteLine($"Марка авто {Marka[i]}");
-                                    Console.WriteLine($"Год выпуска {YearEdition[i]}");
-                                    Console.WriteLine($"Мощность {Power[i]} л.с.");
-                                    Console.WriteLine($"Цвет {Color[i]}");
-                                    Console.WriteLine($"Цена {Cost[i]} $");
-                                    Console.WriteLine();
+                                    tempIndex = i + 1;
+                                    Console.WriteLine(car[i].KomponovkaCar(i+1));
                                     x++;
                                 }
                             }
-                            if (x == 0) Console.WriteLine("К сожалению, у нас нет такой машины");
+                           
+
+                        }
+                        if(choice > 0 && choice<5)
+                        {
+                            if (x == 0) Console.WriteLine("\nК сожалению, у нас нет такой машины");
+                            else {
+                                Console.WriteLine($"\n{user}, Вы останавливаетесь на этом выборе(да/нет)? ");
+                                choise2 = Console.ReadLine();
+                                if(choise2.ToUpper() == "ДА")
+                                {
+                                    if (x > 1)
+                                    {
+                                        while (true)
+                                        {
+                                            Console.WriteLine("\nНайдено несколько машин. Введите номер авто в базе, который Вы планируете брать");
+                                            tempIndex = Convert.ToInt32(Console.ReadLine());
+                                            if (tempIndex >= 1 && tempIndex <= size) break;
+                                        }
+                                    }
+                                    Console.WriteLine("На выбранной Вами машине установлены колеса:");
+                                    Console.WriteLine(wheels[tempIndex - 1].KomponovkaWheel());
+                                    Console.WriteLine("Будете менять (да/нет)?");
+                                    choise2 = Console.ReadLine();
+                                    if (choise2.ToUpper() == "ДА")
+                                    {
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Ведите радиус диска (c 16-го). Изменение на один размер - изменение на 500$");
+                                            newRadius = Convert.ToInt32(Console.ReadLine());
+                                            if (newRadius < wheels[tempIndex-1].radius) continue;
+                                            z += (newRadius - wheels[tempIndex-1].radius)*500;
+                                            wheels[tempIndex-1].radius = newRadius;
+                                            car[tempIndex - 1].cost += z;
+                                            break;
+                                        }
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Введите тип диска (литой или штамп). Стоимость изменения - 1000$ ");
+                                            newTypeDisk = Console.ReadLine();
+                                            if (newTypeDisk.ToUpper() !="ЛИТОЙ" && newTypeDisk.ToUpper() !="ШТАМП") continue;
+                                            if (wheels[tempIndex - 1].typeDisk != newTypeDisk.ToUpper())
+                                            {
+                                                z += 1000;
+                                                wheels[tempIndex - 1].typeDisk = newTypeDisk;
+                                                car[tempIndex - 1].cost += z;
+                                            }
+                                            break;
+                                        }
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Введите сезонность резины (зима или лето). Стоимость изменения - 1000$ ");
+                                            newTypeTyre = Console.ReadLine();
+                                            if (newTypeTyre.ToUpper() != "ЗИМА" && newTypeTyre.ToUpper() != "ЛЕТО") continue;
+                                            if (wheels[tempIndex - 1].typeDisk != newTypeDisk)
+                                            {
+                                                z += 1000;
+                                                wheels[tempIndex - 1].typeDisk = newTypeDisk;
+                                                car[tempIndex - 1].cost += z;
+                                            }
+                                            break;
+                                        }
+
+                                    }
+                                }
+                            }
+
+                                 
+                            
 
                         }
                         if (choice == 5) break;

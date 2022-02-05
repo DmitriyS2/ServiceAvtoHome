@@ -1,5 +1,6 @@
 ﻿using ServiceAvtoHome;
 using System;
+using static ServiceAvtoHome.SimpleData;
 
 namespace ServiceAvto
 {
@@ -8,29 +9,20 @@ namespace ServiceAvto
         static void Main(string[] args)
         {
            
-            string? user, PoiskMarka, PoiskColor, newMarka, newColor, newType, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choise2;
+            string? user, searchMarka, searchColor, newMarka, newColor, newType, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choise2;
             int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y, newYearEdition, newPower, newCost, tempIndex, newRadius, z;
             
             // x - счетчик машин в выборе клиента; y - переменная для выхода из цикла проверки цвета; z - счетчик увеличения стоимости за доп.опции и колеса
             // tempIndex - порядковый номер машины найденной клиентом в базе; choise2 - выбор да/нет
             int size = 10;
-            string[] masMarka = { "FORD", "AUDI", "BMW", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "LEXUS", "FIAT", "RENAULT", "MERCEDES BENZ" };
-            string[] masType = { "СЕДАН", "ХЭТЧБЕК", "УНИВЕРСАЛ", "КУПЕ", "SUV" };
-            string[] masColor = { "БЕЛЫЙ", "ЧЕРНЫЙ", "СЕРЕБРИСТЫЙ", "КРАСНЫЙ", "СИНИЙ" };
-            List<Avto> car = new List<Avto>();
-            List<Wheel> wheels = new List<Wheel>();
-            List<Option> options = new List<Option>();
-            Random rand = new Random();
+
+            CreateCatalogAvto();
             for (int i = 0; i < size; i++)
             {
-                car.Add(new Avto { marka = masMarka[rand.Next(0, 12)], color = masColor[rand.Next(0, 4)], type = masType[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021), power = rand.Next(2, 6) * 50, cost = rand.Next(10, 30) * 1000});
-                wheels.Add(new Wheel { radius = 16, typeTyre = "ЛЕТО", typeDisk = "Штамп" });
-                options.Add(new Option { conditioner = "НЕТ", heat = "НЕТ",  navigation = "НЕТ" });
-                Console.WriteLine(car[i].KomponovkaCar(i+1));
-                Console.WriteLine(wheels[i].KomponovkaWheel());
-                Console.WriteLine(options[i].KomponovkaOption());
-             }
-            
+                Console.WriteLine(cars[i].CarComposition(i + 1));
+                Console.WriteLine(wheels[i].WheelComposition());
+                Console.WriteLine(options[i].OptionComposition());
+            }
             while (true)
             {
                 Console.WriteLine("\nВведите Ваш статус \n администратор \n клиент \n СТОП ");
@@ -48,9 +40,9 @@ namespace ServiceAvto
                         {
                             for (int i = 0; i < size; i++)
                             {
-                                Console.WriteLine(car[i].KomponovkaCar(i+1));
-                                Console.WriteLine(wheels[i].KomponovkaWheel());
-                                Console.WriteLine(options[i].KomponovkaOption());
+                                Console.WriteLine(cars[i].CarComposition(i+1));
+                                Console.WriteLine(wheels[i].WheelComposition());
+                                Console.WriteLine(options[i].OptionComposition());
                             }
                         }
                         if(choice == 2)
@@ -81,10 +73,10 @@ namespace ServiceAvto
                             Console.WriteLine("Введите наличие навигации (да или нет) ");
                             newNavigation = Console.ReadLine();
 
-                            car.Add(new Avto { marka = newMarka, type=newType, color=newColor, power=newPower, yearEdition=newYearEdition,cost=newCost });
-                            Console.WriteLine("\nДобавлена новая машина в каталог\n"+car[size-1].KomponovkaCar(size));
-                            Console.WriteLine(wheels[size - 1].KomponovkaWheel());
-                            Console.WriteLine(options[size-1].KomponovkaOption());
+                            cars.Add(new Avto { marka = newMarka, type=newType, color=newColor, power=newPower, yearEdition=newYearEdition,cost=newCost });
+                            Console.WriteLine("\nДобавлена новая машина в каталог\n"+cars[size-1].CarComposition(size));
+                            Console.WriteLine(wheels[size - 1].WheelComposition());
+                            Console.WriteLine(options[size-1].OptionComposition());
 
                         }
                         if (choice == 3)
@@ -98,8 +90,8 @@ namespace ServiceAvto
                                     Console.WriteLine("Неверный номер авто");
                                     continue;
                                 }
-                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + car[nomerAvto - 1].cost + "$ \nВведите новую цену ");
-                                car[nomerAvto - 1].cost = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + cars[nomerAvto - 1].cost + "$ \nВведите новую цену ");
+                                cars[nomerAvto - 1].cost = Convert.ToInt32(Console.ReadLine());
                                 break;
 
                             }
@@ -124,13 +116,13 @@ namespace ServiceAvto
                         if (choice == 1)
                         {
                             Console.WriteLine("Введите марку авто (англ, заглавными буквами)");
-                            PoiskMarka = Console.ReadLine();
+                            searchMarka = Console.ReadLine();
                             for (int i = 0; i < size; i++)
                             {
-                                if (PoiskMarka.ToUpper() == car[i].marka)
+                                if (searchMarka.ToUpper() == cars[i].marka)
                                 {
                                     tempIndex = i+1;
-                                    Console.WriteLine(car[i].KomponovkaCar(i+1));
+                                    Console.WriteLine(cars[i].CarComposition(i+1));
                                     x++;
                                 }
                             }
@@ -156,10 +148,10 @@ namespace ServiceAvto
                             {
                                 for (int j = 0; j < size; j++)
                                 {
-                                    if (car[i].yearEdition == i)
+                                    if (cars[i].yearEdition == i)
                                     {
                                         tempIndex = i + 1;
-                                        Console.WriteLine(car[i].KomponovkaCar(i+1));
+                                        Console.WriteLine(cars[i].CarComposition(i+1));
                                         x++;
                                     }
                                 }
@@ -186,10 +178,10 @@ namespace ServiceAvto
                             {
                                 for (int j = 0; j < size; j++)
                                 {
-                                    if (car[i].power == i)
+                                    if (cars[i].power == i)
                                     {
                                         tempIndex = i + 1;
-                                        Console.WriteLine(car[i].KomponovkaCar(i+1));
+                                        Console.WriteLine(cars[i].CarComposition(i+1));
                                         x++;
                                     }
                                 }
@@ -202,10 +194,10 @@ namespace ServiceAvto
                             while (true)
                             {
                                 Console.WriteLine("Введите цвет авто (белый, черный, серебристый, красный, синий)");
-                                PoiskColor = Console.ReadLine();
+                                searchColor = Console.ReadLine();
                                 for (int i = 0; i < 5; i++)
                                 {
-                                    if (masColor[i] == PoiskColor.ToUpper())
+                                    if (masColor[i] == searchColor.ToUpper())
                                     {
                                         y = 1;
                                         break;
@@ -216,10 +208,10 @@ namespace ServiceAvto
                             }
                             for (int i = 0; i < size; i++)
                             {
-                                if (car[i].color == PoiskColor.ToUpper())
+                                if (cars[i].color == searchColor.ToUpper())
                                 {
                                     tempIndex = i + 1;
-                                    Console.WriteLine(car[i].KomponovkaCar(i+1));
+                                    Console.WriteLine(cars[i].CarComposition(i+1));
                                     x++;
                                 }
                             }
@@ -244,7 +236,7 @@ namespace ServiceAvto
                                         }
                                     }
                                     Console.WriteLine("На выбранной Вами машине установлены колеса:");
-                                    Console.WriteLine(wheels[tempIndex - 1].KomponovkaWheel());
+                                    Console.WriteLine(wheels[tempIndex - 1].WheelComposition());
                                     Console.WriteLine("Будете менять (да/нет)?");
                                     choise2 = Console.ReadLine();
                                     if (choise2.ToUpper() == "ДА")
@@ -256,7 +248,7 @@ namespace ServiceAvto
                                             if (newRadius < wheels[tempIndex-1].radius) continue;
                                             z += (newRadius - wheels[tempIndex-1].radius)*500;
                                             wheels[tempIndex-1].radius = newRadius;
-                                            car[tempIndex - 1].cost += z;
+                                            cars[tempIndex - 1].cost += z;
                                             break;
                                         }
                                         while (true)
@@ -268,7 +260,7 @@ namespace ServiceAvto
                                             {
                                                 z += 1000;
                                                 wheels[tempIndex - 1].typeDisk = newTypeDisk;
-                                                car[tempIndex - 1].cost += z;
+                                                cars[tempIndex - 1].cost += z;
                                             }
                                             break;
                                         }
@@ -281,7 +273,7 @@ namespace ServiceAvto
                                             {
                                                 z += 1000;
                                                 wheels[tempIndex - 1].typeDisk = newTypeDisk;
-                                                car[tempIndex - 1].cost += z;
+                                                cars[tempIndex - 1].cost += z;
                                             }
                                             break;
                                         }

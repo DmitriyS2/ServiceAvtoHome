@@ -14,7 +14,7 @@ namespace ServiceAvtoHome
         public int power;
         public int cost;
         public string? marka;
-        public string KomponovkaCar(int i)
+        public string CarComposition(int i)
         {
             return "\nНомер авто в каталоге " + i + "\nМарка "+ marka + "\nЦвет " + color + "\nТип кузова " + type + "\nГод выпуска " + yearEdition + "\nМощность " + power + " л.с.\nЦена" + cost + " $";
         }

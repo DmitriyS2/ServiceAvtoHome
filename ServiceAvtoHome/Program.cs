@@ -34,7 +34,7 @@ namespace ServiceAvtoHome
                     Console.WriteLine();
                     while (true)
                     {
-                        Console.WriteLine("Что необходимо сделать: \n 1 - Вывести на экран все имеющиеся авто на складе \n 2 - добавить авто в каталог \n 3 - изменить цену авто \n 4 - выход");
+                        Console.WriteLine("\nЧто необходимо сделать: \n 1 - Вывести на экран все имеющиеся авто на складе \n 2 - добавить авто в каталог \n 3 - изменить цену авто \n 4 - выход");
                         choice = Convert.ToInt32(Console.ReadLine());
                         if (choice == 1)
                         {
@@ -111,9 +111,9 @@ namespace ServiceAvtoHome
                     {
                         Console.WriteLine($"{user}, по какому параметру будем искать авто: \n 1 - марка авто \n 2 - год выпуска (2000-2021) \n 3 - мощность в л.с.(100-300) \n 4 - цвет \n 5 - выход");
                         choice = Convert.ToInt32(Console.ReadLine());
-                        x = 0;
-                        y = 0;
-                        z = 0;
+                        x = 0; // x - счетчик машин в выборе клиента
+                        y = 0; // y - переменная для выхода из цикла проверки цвета
+                        z = 0; // z - счетчик увеличения стоимости за доп.опции и колеса
                         tempIndex = 0;
                         if (choice == 1)
                         {
@@ -125,7 +125,7 @@ namespace ServiceAvtoHome
                                 {
                                     tempIndex = i+1;
                                     Console.WriteLine(cars[i].CarComposition(i+1));
-                                    x++;
+                                    x++; // x - счетчик машин в выборе клиента
                                 }
                             }
                            
@@ -150,11 +150,11 @@ namespace ServiceAvtoHome
                             {
                                 for (int j = 0; j < size; j++)
                                 {
-                                    if (cars[i].yearEdition == i)
+                                    if (cars[j].yearEdition == i)
                                     {
-                                        tempIndex = i + 1;
-                                        Console.WriteLine(cars[i].CarComposition(i+1));
-                                        x++;
+                                        tempIndex = j + 1;
+                                        Console.WriteLine(cars[j].CarComposition(j+1));
+                                        x++; // x - счетчик машин в выборе клиента
                                     }
                                 }
                             }
@@ -180,11 +180,11 @@ namespace ServiceAvtoHome
                             {
                                 for (int j = 0; j < size; j++)
                                 {
-                                    if (cars[i].power == i)
+                                    if (cars[j].power == i)
                                     {
-                                        tempIndex = i + 1;
-                                        Console.WriteLine(cars[i].CarComposition(i+1));
-                                        x++;
+                                        tempIndex = j + 1;
+                                        Console.WriteLine(cars[j].CarComposition(j+1));
+                                        x++; // x - счетчик машин в выборе клиента
                                     }
                                 }
                             }
@@ -201,12 +201,12 @@ namespace ServiceAvtoHome
                                 {
                                     if (masColor[i] == searchColor.ToUpper())
                                     {
-                                        y = 1;
+                                        y = 1; // y - переменная для выхода из цикла проверки цвета
                                         break;
                                     }
                                 }
-                                if (y == 1) break;
-                               
+                                if (y == 1) break; // y - переменная для выхода из цикла проверки цвета
+
                             }
                             for (int i = 0; i < size; i++)
                             {
@@ -248,7 +248,7 @@ namespace ServiceAvtoHome
                                             Console.WriteLine("Ведите радиус диска (c 16-го). Изменение на один размер - изменение на 500$");
                                             newRadius = Convert.ToInt32(Console.ReadLine());
                                             if (newRadius < wheels[tempIndex-1].radius) continue;
-                                            z += (newRadius - wheels[tempIndex-1].radius)*500;
+                                            z += (newRadius - wheels[tempIndex-1].radius)*500; // z - счетчик увеличения стоимости за доп.опции и колеса
                                             wheels[tempIndex-1].radius = newRadius;
                                             cars[tempIndex - 1].cost += z;
                                             break;
@@ -260,7 +260,7 @@ namespace ServiceAvtoHome
                                             if (newTypeDisk.ToUpper() !="ЛИТОЙ" && newTypeDisk.ToUpper() !="ШТАМП") continue;
                                             if (wheels[tempIndex - 1].typeDisk != newTypeDisk.ToUpper())
                                             {
-                                                z += 1000;
+                                                z += 1000; // z - счетчик увеличения стоимости за доп.опции и колеса
                                                 wheels[tempIndex - 1].typeDisk = newTypeDisk;
                                                 cars[tempIndex - 1].cost += z;
                                             }
@@ -271,9 +271,9 @@ namespace ServiceAvtoHome
                                             Console.WriteLine("Введите сезонность резины (зима или лето). Стоимость изменения - 1000$ ");
                                             newTypeTyre = Console.ReadLine();
                                             if (newTypeTyre.ToUpper() != "ЗИМА" && newTypeTyre.ToUpper() != "ЛЕТО") continue;
-                                            if (wheels[tempIndex - 1].typeDisk != newTypeDisk)
+                                            if (wheels[tempIndex - 1].typeTyre != newTypeTyre.ToUpper())
                                             {
-                                                z += 1000;
+                                                z += 1000; // z - счетчик увеличения стоимости за доп.опции и колеса
                                                 wheels[tempIndex - 1].typeDisk = newTypeDisk;
                                                 cars[tempIndex - 1].cost += z;
                                             }
@@ -291,11 +291,11 @@ namespace ServiceAvtoHome
                                         {
                                             Console.WriteLine("Кондиционер (да/нет) - изменение на 500$");
                                             newConditioner = Console.ReadLine();
-                                            if (newConditioner.ToUpper() != "ДА" && newConditioner != "НЕТ") continue;
-                                            if (options[tempIndex - 1].conditioner != newConditioner)
+                                            if (newConditioner.ToUpper() != "ДА" && newConditioner.ToUpper() != "НЕТ") continue;
+                                            if (options[tempIndex - 1].conditioner != newConditioner.ToUpper())
                                             {
-                                                z += 500;
-                                                options[tempIndex - 1].conditioner = newConditioner;
+                                                z += 500; // z - счетчик увеличения стоимости за доп.опции и колеса
+                                                options[tempIndex - 1].conditioner = newConditioner.ToUpper();
                                                 cars[tempIndex - 1].cost += z;
                                             }
                                             break;
@@ -304,11 +304,11 @@ namespace ServiceAvtoHome
                                         {
                                             Console.WriteLine("Зимний пакет (да/нет) - изменение на 500$");
                                             newHeat = Console.ReadLine();
-                                            if (newHeat.ToUpper() != "ДА" && newHeat != "НЕТ") continue;
-                                            if (options[tempIndex - 1].heat != newHeat)
+                                            if (newHeat.ToUpper() != "ДА" && newHeat.ToUpper() != "НЕТ") continue;
+                                            if (options[tempIndex - 1].heat != newHeat.ToUpper())
                                             {
-                                                z += 500;
-                                                options[tempIndex - 1].heat = newHeat;
+                                                z += 500; // z - счетчик увеличения стоимости за доп.опции и колеса
+                                                options[tempIndex - 1].heat = newHeat.ToUpper();
                                                 cars[tempIndex - 1].cost += z;
                                             }
                                             break;
@@ -317,17 +317,22 @@ namespace ServiceAvtoHome
                                         {
                                             Console.WriteLine("Навигация (да/нет) - изменение на 500$");
                                             newNavigation = Console.ReadLine();
-                                            if (newNavigation.ToUpper() != "ДА" && newHeat != "НЕТ") continue;
-                                            if (options[tempIndex - 1].navigation != newNavigation)
+                                            if (newNavigation.ToUpper() != "ДА" && newNavigation.ToUpper() != "НЕТ") continue;
+                                            if (options[tempIndex - 1].navigation != newNavigation.ToUpper())
                                             {
-                                                z += 500;
-                                                options[tempIndex - 1].navigation = newNavigation;
+                                                z += 500; // z - счетчик увеличения стоимости за доп.опции и колеса
+                                                options[tempIndex - 1].navigation = newNavigation.ToUpper();
                                                 cars[tempIndex - 1].cost += z;
                                             }
                                             break;
                                         }
 
                                     }
+                                    Console.WriteLine("\nВаш итоговый автомобиль:");
+                                    Console.WriteLine(cars[tempIndex-1].CarComposition(tempIndex));
+                                    Console.WriteLine(wheels[tempIndex-1].WheelComposition());
+                                    Console.WriteLine(options[tempIndex-1].OptionComposition());
+
                                 }
                             }
 

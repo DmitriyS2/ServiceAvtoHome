@@ -2,7 +2,7 @@
 using System;
 using static ServiceAvtoHome.SimpleData;
 
-namespace ServiceAvto
+namespace ServiceAvtoHome
 {
     class Program
     {
@@ -75,7 +75,9 @@ namespace ServiceAvto
 
                             cars.Add(new Avto { marka = newMarka, type=newType, color=newColor, power=newPower, yearEdition=newYearEdition,cost=newCost });
                             Console.WriteLine("\nДобавлена новая машина в каталог\n"+cars[size-1].CarComposition(size));
-                            Console.WriteLine(wheels[size - 1].WheelComposition());
+                            wheels.Add(new Wheel { radius = newRadius, typeDisk = newTypeDisk, typeTyre = newTypeTyre, });
+                            Console.WriteLine(wheels[size-1].WheelComposition());
+                            options.Add(new Option { conditioner = newConditioner, heat= newHeat, navigation=newNavigation });
                             Console.WriteLine(options[size-1].OptionComposition());
 
                         }

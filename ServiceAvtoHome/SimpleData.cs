@@ -23,7 +23,6 @@ namespace ServiceAvtoHome
                     cars.Add(new Avto { marka = masMarka[rand.Next(0, 12)], color = masColor[rand.Next(0, 4)], type = masType[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021), power = rand.Next(2, 6) * 50, cost = rand.Next(10, 30) * 1000});
                     wheels.Add(new Wheel { radius = 16, typeTyre = "ЛЕТО", typeDisk = "Штамп" });
                     options.Add(new Option { conditioner = "НЕТ", heat = "НЕТ", navigation = "НЕТ" });
-                  
                 }
             return cars;
         }

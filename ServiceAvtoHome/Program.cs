@@ -9,7 +9,7 @@ namespace ServiceAvto
         static void Main(string[] args)
         {
            
-            string? user, searchMarka, searchColor, newMarka, newColor, newType, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choise2;
+            string? user, searchMarka, searchColor, newMarka, newColor, newType, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choise2 ;
             int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, y, newYearEdition, newPower, newCost, tempIndex, newRadius, z;
             
             // x - счетчик машин в выборе клиента; y - переменная для выхода из цикла проверки цвета; z - счетчик увеличения стоимости за доп.опции и колеса
@@ -273,6 +273,53 @@ namespace ServiceAvto
                                             {
                                                 z += 1000;
                                                 wheels[tempIndex - 1].typeDisk = newTypeDisk;
+                                                cars[tempIndex - 1].cost += z;
+                                            }
+                                            break;
+                                        }
+
+                                    }
+                                    Console.WriteLine("Опции на выбранной Вами машине:");
+                                    Console.WriteLine(options[tempIndex - 1].OptionComposition());
+                                    Console.WriteLine("Будете менять (да/нет)?");
+                                    choise2 = Console.ReadLine();
+                                    if (choise2.ToUpper() == "ДА")
+                                    {
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Кондиционер (да/нет) - изменение на 500$");
+                                            newConditioner = Console.ReadLine();
+                                            if (newConditioner.ToUpper() != "ДА" && newConditioner != "НЕТ") continue;
+                                            if (options[tempIndex - 1].conditioner != newConditioner)
+                                            {
+                                                z += 500;
+                                                options[tempIndex - 1].conditioner = newConditioner;
+                                                cars[tempIndex - 1].cost += z;
+                                            }
+                                            break;
+                                        }
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Зимний пакет (да/нет) - изменение на 500$");
+                                            newHeat = Console.ReadLine();
+                                            if (newHeat.ToUpper() != "ДА" && newHeat != "НЕТ") continue;
+                                            if (options[tempIndex - 1].heat != newHeat)
+                                            {
+                                                z += 500;
+                                                options[tempIndex - 1].heat = newHeat;
+                                                cars[tempIndex - 1].cost += z;
+                                            }
+                                            break;
+                                        }
+                                        while (true)
+                                        {
+                                            Console.WriteLine("Навигация (да/нет) - изменение на 500$");
+                                            newNavigation = Console.ReadLine();
+                                            if (newNavigation.ToUpper() != "ДА" && newHeat != "НЕТ") continue;
+                                            if (options[tempIndex - 1].navigation != newNavigation)
+                                            {
+                                                z += 500;
+                                                options[tempIndex - 1].navigation = newNavigation;
                                                 cars[tempIndex - 1].cost += z;
                                             }
                                             break;

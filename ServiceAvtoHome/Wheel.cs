@@ -14,7 +14,7 @@ namespace ServiceAvtoHome
 
         public string WheelComposition()
         {
-            return "\nРадиус диска " + radius + "\nТип диска " + typeDisk + "\nСезонность резины " + typeTyre + "\n";
+            return "\nРадиус диска " + radius + "\nТип диска " + typeDisk + "\nСезонность резины " + typeTyre;
         }
     }
 }

@@ -20,6 +20,11 @@ namespace ServiceAvtoHome
         {
             return "\nБанк " + bankName + "\nПервоначальный взнос " + firstPayment*10 + "%\nСрок кредита "+(periodCredit*12)+ "мес.\nПроцентная ставка " + rate + "%\nЕжемесячный платеж "+ payment+"$";
         }
+
+        public string CreditAnswer (int choice)
+        {
+            return "\nПроходите в " + (choice + 2) + " кабинет. Там находится представитель " + SimpleData.credits[choice - 1].bankName;
+        }
     }
 }
 

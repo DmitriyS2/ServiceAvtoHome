@@ -6,316 +6,132 @@ namespace ServiceAvtoHome
 {
     class Program
     {
+        public static int MenuInt(string menu)
+        {
+            Console.WriteLine(menu);
+            return Convert.ToInt32(Console.ReadLine());
+        }
 
+        public static string MenuString(string menu)
+        {
+            Console.WriteLine(menu);
+            return Console.ReadLine();
+        }
+                
+        public static string NewLineParametr(string phrase, List<string>masLine)
+        {
+            while (true)
+            {
+                newLineParametr = MenuString(phrase);
+                if (masLine.Contains(newLineParametr.ToUpper()) == true) return newLineParametr.ToUpper();
+            }
+        }
+                               
+        public static int NewNumberParametr(string phrase, int border1, int border2)
+        {
+            while (true)
+            {
+                newNumberParametr = MenuInt(phrase);
+                if (newNumberParametr >= border1 && newNumberParametr <= border2) return newNumberParametr;
+            }
+        }
+        
+        public static void AddNewAvto()
+        {
+            size++;      
+            Console.Clear();
+            cars.Add(new Avto { marka = NewLineParametr(masPhrases[0], masMarka), type = NewLineParametr(masPhrases[1], masType), color = NewLineParametr(masPhrases[3], masColor), power = NewNumberParametr(masPhrases[4], 100, 300), yearEdition = NewNumberParametr(masPhrases[2], 2000, 2021), cost = NewNumberParametr(masPhrases[5], 10000, 30000) });
+            wheels.Add(new Wheel { radius = NewNumberParametr(masPhrases[6], 16, 21), typeDisk = NewLineParametr(masPhrases[7], masDisk), typeTyre = NewLineParametr(masPhrases[8], masTyre) });
+            options.Add(new Option { conditioner = NewLineParametr(masPhrases[9], masYN), heat = NewLineParametr(masPhrases[10], masYN), navigation = NewLineParametr(masPhrases[11], masYN) });
+            Console.WriteLine("\nДобавлена новая машина в каталог");
+            PrintAvto(size-1);            
+            Pause();
+        }
+
+        public static void PrintAvto(int i)
+        {
+            Console.WriteLine(cars[i].CarComposition(i + 1));
+            Console.WriteLine(wheels[i].WheelComposition());
+            Console.WriteLine(options[i].OptionComposition());
+        }
+
+        public static void ChangeCost()
+        {            
+                Console.Clear();
+                nomerAvto = NewNumberParametr(masPhrases[12], 1, size);                
+                PrintAvto(nomerAvto-1);
+                cars[nomerAvto - 1].cost = NewNumberParametr(masPhrases[5], 10000, 30000);
+            Pause();             
+        }
+
+        public static void Credit()
+        {
+            CreateCredit(cars[tempIndex - 1].cost);
+            Console.Clear();
+            Console.WriteLine(masPhrases[16]);
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine(credits[i].CreditComposition());
+            }            
+            choice = NewNumberParametr(masPhrases[14], 1, 3);             
+            Console.WriteLine(credits[0].CreditAnswer(choice) + masPhrases[17]);
+        }
+
+        public static void Pause(string hello="")
+        {
+            Console.WriteLine(hello);
+            Console.WriteLine(masPhrases[19]);
+            Console.ReadLine();
+            Console.Clear();
+        }
+               
         static void Main(string[] args)
         {
-            string? user, searchMarka, searchColor, newMarka, newColor, newType, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choiseYN;
-            int choice, nomerAvto, x, yearEditionA, yearEditionB, powerA, powerB, newYearEdition, newPower, newCost, tempIndex, newRadius, addCost;
-
-            int size = 10;
-            int y = 0;
-
-            string NewMarka()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите марку авто (FORD, AUDI, BMW, OPEL, MAZDA, LADA, MITSUBISHI, NISSAN, TOYOTA, LEXUS, FIAT, RENAULT, MERCEDES BENZ)");
-                    newMarka = Console.ReadLine();
-                    for (int i = 0; i < 13; i++)
-                    {
-                        if (masMarka[i] == newMarka.ToUpper())
-                        {
-                            y = 1; // y - переменная для выхода из цикла проверки
-                            break;
-                        }
-                    }
-                    if (y == 1) break; // y - переменная для выхода из цикла проверки
-
-                }
-                return newMarka.ToUpper();
-            }
-
-            string NewType()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите тип кузова (Седан, Хэтчбек, Универсал, Купе, SUV)");
-                    newType = Console.ReadLine();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (masType[i] == newType.ToUpper())
-                        {
-                            y = 1; // y - переменная для выхода из цикла проверки
-                            break;
-                        }
-                    }
-                    if (y == 1) break; // y - переменная для выхода из цикла проверки
-
-                }
-                return newType.ToUpper();
-            }
-
-            int NewYearEdition()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите год выпуска (в интервале 2000 - 2021)");
-                    newYearEdition = Convert.ToInt32(Console.ReadLine());
-                    if (newYearEdition >= 2000 && newYearEdition <= 2021) break;
-
-                }
-                return newYearEdition;
-            }
-
-            string NewColor()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите цвет кузова (белый, черный, серебристый, красный, синий)");
-                    newColor = Console.ReadLine();
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (masColor[i] == newColor.ToUpper())
-                        {
-                            y = 1; // y - переменная для выхода из цикла проверки
-                            break;
-                        }
-                    }
-                    if (y == 1) break; // y - переменная для выхода из цикла проверки
-
-                }
-                return newColor.ToUpper();
-            }
-
-            int NewPower()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите мощность (в интервале 100 - 300 л.с.)");
-                    newPower = Convert.ToInt32(Console.ReadLine());
-                    if (newPower >= 100 && newPower <= 2021) break;
-
-                }
-                return newPower;
-            }
-
-            int NewCost()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите цену (в интервале 10000 - 30000$)");
-                    newCost = Convert.ToInt32(Console.ReadLine());
-                    if (newCost >= 10000 && newCost <= 30000) break;
-
-                }
-                return newCost;
-            }
-
-            int NewRadius()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите радиус диска (в интервале 16 - 21)");
-                    newRadius = Convert.ToInt32(Console.ReadLine());
-                    if (newRadius >= 16 && newRadius <= 21) break;
-
-                }
-                return newRadius;
-            }
-
-            string NewTypeDisc()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите тип диска (литой или штамп)");
-                    newTypeDisk = Console.ReadLine();
-                    if (newTypeDisk.ToUpper() == "ЛИТОЙ" || newTypeDisk.ToUpper() == "ШТАМП") break;
-                }
-                return newTypeDisk.ToUpper();
-            }
-
-            string NewTypeTyre()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите сезонность резины (зима или лето)");
-                    newTypeTyre = Console.ReadLine();
-                    if (newTypeTyre.ToUpper() == "ЗИМА" || newTypeTyre.ToUpper() == "ЛЕТО") break;
-                }
-                return newTypeTyre.ToUpper();
-            }
-
-            string NewConditioner()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите наличие кондиционера (да или нет)");
-                    newConditioner = Console.ReadLine();
-                    if (newConditioner.ToUpper() == "ДА" || newConditioner.ToUpper() == "НЕТ") break;
-                }
-                return newConditioner.ToUpper();
-            }
-
-            string NewHeat()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите наличие зимнего пакета (да или нет)");
-                    newHeat = Console.ReadLine();
-                    if (newHeat.ToUpper() == "ДА" || newHeat.ToUpper() == "НЕТ") break;
-                }
-                return newHeat.ToUpper();
-            }
-
-            string NewNavigation()
-            {
-                while (true)
-                {
-                    Console.WriteLine("\nВведите наличие навигации (да или нет)");
-                    newNavigation = Console.ReadLine();
-                    if (newNavigation.ToUpper() == "ДА" || newNavigation.ToUpper() == "НЕТ") break;
-                }
-                return newNavigation.ToUpper();
-            }
-
-            void AddNewAvto()
-            {
-                ClearScreen();
-                size++;
-                newMarka = NewMarka();
-                newType = NewType();
-                newYearEdition = NewYearEdition();
-                newColor = NewColor();
-                newPower = NewPower();
-                newCost = NewCost();
-                newRadius = NewRadius();
-                newTypeDisk = NewTypeDisc();
-                newTypeTyre = NewTypeTyre();
-                newConditioner = NewConditioner();
-                newHeat = NewHeat();
-                newNavigation = NewNavigation();
-                ClearScreen();
-                cars.Add(new Avto { marka = newMarka, type = newType, color = newColor, power = newPower, yearEdition = newYearEdition, cost = newCost });
-                Console.WriteLine("\nДобавлена новая машина в каталог\n" + cars[size - 1].CarComposition(size));
-                wheels.Add(new Wheel { radius = newRadius, typeDisk = newTypeDisk, typeTyre = newTypeTyre });
-                Console.WriteLine(wheels[size - 1].WheelComposition());
-                options.Add(new Option { conditioner = newConditioner, heat = newHeat, navigation = newNavigation });
-                Console.WriteLine(options[size - 1].OptionComposition());
-                Console.ReadLine();
-                ClearScreen();
-
-            }
-
-            void PrintAvto(int i)
-            {
-                Console.WriteLine(cars[i].CarComposition(i + 1));
-                Console.WriteLine(wheels[i].WheelComposition());
-                Console.WriteLine(options[i].OptionComposition());
-            }
-
-            void ChangeCost()
-            {
-                while (true)
-                {
-                    ClearScreen();
-                    Console.WriteLine("\nВведите порядковый номер авто");
-                    nomerAvto = Convert.ToInt32(Console.ReadLine());
-                    if (nomerAvto < 1 || nomerAvto > size)
-                    {
-                        Console.WriteLine("Неверный номер авто");
-                        continue;
-                    }
-                    Console.WriteLine("Старая цена " + nomerAvto + "-й машины: " + cars[nomerAvto - 1].cost + "$ \nВведите новую цену ");
-                    cars[nomerAvto - 1].cost = Convert.ToInt32(Console.ReadLine());
-                    Console.ReadLine();
-                    ClearScreen();
-                    break;
-
-                }
-            }
-
-            void Credit()
-            {
-                CreateCredit(cars[tempIndex - 1].cost);
-                ClearScreen();
-                Console.WriteLine($"\n{user}, для Вас есть три предложения по автокредиту:\n");
-                for (int i = 0; i < 3; i++)
-                {
-                    Console.WriteLine(credits[i].CreditComposition());
-                }
-                while (true)
-                {
-                    Console.WriteLine("\nКакое предложение выбираете(1,2,3)?");
-                    choice = Convert.ToInt32(Console.ReadLine());
-                    if (choice >= 1 && choice <= 3) break;
-                }
-                Console.WriteLine("\nПроходите в " + (choice + 2) + " кабинет. Там находится представитель " + credits[choice - 1].bankName + "\nВтечение получаса мы подготовим Ваш автомобиль и выдадим его Вам. \nПоздравляем с покупкой!");
-
-            }
-            void ClearScreen() 
-            {
-                for (int i = 0; i < 30; i++) Console.WriteLine(" ");
-            }
-
             CreateCatalogAvto();
             
             while (true)
             {
-                Console.WriteLine("\nВведите Ваш статус \n администратор \n клиент \n СТОП ");
-                user = Console.ReadLine();
-                if (user.ToUpper() == "АДМИНИСТРАТОР" || user.ToUpper()=="ADMIN")
+                Console.Clear();
+                choice = MenuInt (masPhrases[20]);               
+                if (choice==1)
                 {
-                    user = "admin";
-                    Console.WriteLine($"\nДобрый день, {user}!\nДля начала нажмите ENTER\n");
-                    Console.ReadLine();
-                    ClearScreen();
+                    user = "admin";                   
+                    Pause($"\nДобрый день, {user}!");                    
                     while (true)
                     {
-                      
-                        Console.WriteLine("Что необходимо сделать: \n 1 - Вывести на экран все имеющиеся авто на складе \n 2 - добавить авто в каталог \n 3 - изменить цену авто \n 4 - выход");
-                        choice = Convert.ToInt32(Console.ReadLine());
-                        
+                        choice = MenuInt (masPhrases[21]);                                   
                         if (choice == 1) // печать всех авто
                         {
-                            ClearScreen();
+                            Console.Clear();
                             for (int i = 0; i < size; i++)
                             {
                                 PrintAvto(i);
                             }
-                            Console.ReadLine();
+                            Pause();
                         }
-
                         if (choice == 2) AddNewAvto();// добавить авто в каталог
-
                         if (choice == 3) ChangeCost();// изменить цену авто
-
                         if (choice == 4)
                         {
-                            ClearScreen();
+                            Console.Clear();
                             break;
                         }
                     }
                 }
-
-                if (user.ToUpper() == "КЛИЕНТ")
+                if (choice==2)
                 {
-                    Console.WriteLine("\nКак к Вам обращаться?");
-                    user = Console.ReadLine();
-                    Console.WriteLine($"Добрый день, {user}! \nДля начала нажмите ENTER");
-                    Console.ReadLine();
-                    ClearScreen();
+                    user = MenuString(masPhrases[22]);                                  
+                    Pause($"\nДобрый день, {user}!");
                     while (true)
                     {
-                        Console.WriteLine($"\n{user}, по какому параметру будем искать авто: \n 1 - марка авто \n 2 - год выпуска (2000-2021) \n 3 - мощность в л.с.(100-300) \n 4 - цвет \n 5 - выход");
-                        choice = Convert.ToInt32(Console.ReadLine());
-                        x = 0; // x - счетчик машин в выборе клиента
-                        y = 0; // y - переменная для выхода из цикла проверки цвета
+                        choice = MenuInt (masPhrases[23]);                        
+                        counterCustomerAvto = 0; // счетчик машин в выборе клиента
                         addCost = 0;
                         tempIndex = 0;
                         if (choice == 1) // поиск по марке
                         {
-                            searchMarka = NewMarka();
-                            ClearScreen();
+                            searchMarka = NewLineParametr(masPhrases[0], masMarka);
+                            Console.Clear();
                             for (int i = 0; i < size; i++)
                             {
                                 if (searchMarka == cars[i].marka)
@@ -323,27 +139,25 @@ namespace ServiceAvtoHome
                                     // tempIndex - порядковый номер машины найденной клиентом в базе
                                     tempIndex = i+1;
                                     Console.WriteLine(cars[i].CarComposition(i+1));
-                                    x++; // x - счетчик машин в выборе клиента
+                                    counterCustomerAvto++;
                                 }
-                            }
-                           
-
+                            }                         
                         }
                         if (choice == 2) // поиск по году выпуска
                         {
                             while (true)
                             {
-                                Console.WriteLine("\nНужно ввести начало и конец интервала поиска. ");
-                                yearEditionA = NewYearEdition();
-                                yearEditionB = NewYearEdition();
+                                Console.WriteLine(masPhrases[24]);
+                                yearEditionA = NewNumberParametr(masPhrases[2], 2000, 2021);
+                                yearEditionB = NewNumberParametr(masPhrases[2], 2000, 2021);
                                 if (yearEditionA > yearEditionB)
                                 {
-                                    Console.WriteLine("Неверный год выпуска. Введите заново");
+                                    Console.WriteLine(masPhrases[25]);
                                     continue;
                                 }
                                 break;
                             }
-                            ClearScreen();
+                            Console.Clear();
                             for (int i = yearEditionA; i < yearEditionB + 1; i++)
                             {
                                 for (int j = 0; j < size; j++)
@@ -352,28 +166,26 @@ namespace ServiceAvtoHome
                                     {
                                         tempIndex = j + 1;
                                         Console.WriteLine(cars[j].CarComposition(j+1));
-                                        x++; // x - счетчик машин в выборе клиента
+                                        counterCustomerAvto++; // x - счетчик машин в выборе клиента
                                     }
                                 }
-                            }
-                            
-
+                            }                           
                         }
                         if (choice == 3) // поиск по мощности
                         {
                             while (true)
                             {
-                                Console.WriteLine("\nНужно ввести начало и конец интервала поиска. ");
-                                powerA = NewPower();
-                                powerB = NewPower();
+                                Console.WriteLine(masPhrases[25]);
+                                powerA = NewNumberParametr(masPhrases[4], 100, 300);
+                                powerB = NewNumberParametr(masPhrases[4], 100, 300);
                                 if (powerA > powerB)
                                 {
-                                    Console.WriteLine("Неверно введена мощность. Попробуйте заново");
+                                    Console.WriteLine(masPhrases[25]);
                                     continue;
                                 }
                                 break;
                             }
-                            ClearScreen();
+                            Console.Clear();
                             for (int i = powerA; i < powerB + 1; i++)
                             {
                                 for (int j = 0; j < size; j++)
@@ -382,62 +194,55 @@ namespace ServiceAvtoHome
                                     {
                                         tempIndex = j + 1;
                                         Console.WriteLine(cars[j].CarComposition(j+1));
-                                        x++; // x - счетчик машин в выборе клиента
+                                        counterCustomerAvto++; // x - счетчик машин в выборе клиента
                                     }
                                 }
-                            }
-                          
-
+                            }                         
                         }
                         if (choice == 4) // поиск по цвету
                         {
-                            searchColor = NewColor();
-                            ClearScreen();    
+                            searchColor = NewLineParametr(masPhrases[3], masColor);
+                            Console.Clear();    
                             for (int i = 0; i < size; i++)
                             {
                                 if (cars[i].color == searchColor)
                                 {
                                     tempIndex = i + 1;
                                     Console.WriteLine(cars[i].CarComposition(i+1));
-                                    x++;
+                                    counterCustomerAvto++;
                                 }
-                            }
-                           
-
+                            }                          
                         }
                         if(choice > 0 && choice<5)
                         {
-                            if (x == 0) Console.WriteLine("\nК сожалению, у нас нет такой машины");
-                            else {
-                                Console.WriteLine($"\n{user}, Вы останавливаетесь на этом выборе(да/нет)? ");
+                            if (counterCustomerAvto == 0) Console.WriteLine(masPhrases[26]);
+                            else {                                
                                 // choiseYN - выбор да/нет
-                                choiseYN = Console.ReadLine();
+                                choiseYN = MenuString(masPhrases[27]); ;
                                 if(choiseYN.ToUpper() == "ДА")
                                 {
-                                    if (x > 1)
+                                    if (counterCustomerAvto > 1)
                                     {
                                         while (true)
-                                        {
-                                            Console.WriteLine("\nНайдено несколько машин. Введите номер авто в базе, который Вы планируете брать");
-                                            tempIndex = Convert.ToInt32(Console.ReadLine());
+                                        {                                           
+                                            tempIndex = MenuInt(masPhrases[28]);
                                             if (tempIndex >= 1 && tempIndex <= size) break;
                                         }
                                     }
-                                    ClearScreen();
-                                    Console.WriteLine("\nНа выбранной Вами машине установлены колеса:");
-                                    Console.WriteLine(wheels[tempIndex - 1].WheelComposition());
-                                    Console.WriteLine("Будете менять (да/нет)?");
-                                    choiseYN = Console.ReadLine();
-                                    if (choiseYN.ToUpper() == "ДА")
+                                    Console.Clear();
+                                    Console.WriteLine(masPhrases[29]);
+                                    Console.WriteLine(wheels[tempIndex - 1].WheelComposition());                                    
+                                    choiseYN = MenuString(masPhrases[27]);
+                                    if (choiseYN.ToUpper() == "НЕТ")
                                     {
-                                        Console.WriteLine("\nСтоимость изменения радиуса на один размер - 500$");
-                                        newRadius = NewRadius();
+                                        Console.WriteLine(masPhrases[30]);
+                                        newRadius = NewNumberParametr(masPhrases[6], 16, 21);
                                         addCost += (newRadius - wheels[tempIndex-1].radius)*500; 
                                         wheels[tempIndex-1].radius = newRadius;
                                         cars[tempIndex - 1].cost += addCost;
                                         
-                                        Console.WriteLine("\nСтоимость изменения типа диска - 1000$ ");
-                                        newTypeDisk = NewTypeDisc();
+                                        Console.WriteLine(masPhrases[31]);
+                                        newTypeDisk = NewLineParametr(masPhrases[7], masDisk);
                                         if (wheels[tempIndex - 1].typeDisk != newTypeDisk)
                                         {
                                         addCost += 1000; 
@@ -445,8 +250,8 @@ namespace ServiceAvtoHome
                                         cars[tempIndex - 1].cost += addCost;
                                         }
                                         
-                                        Console.WriteLine("\nСтоимость изменения типа резины - 1000$ ");
-                                        newTypeTyre = NewTypeTyre();
+                                        Console.WriteLine(masPhrases[32]);
+                                        newTypeTyre = NewLineParametr(masPhrases[8], masTyre);
                                         if (wheels[tempIndex - 1].typeTyre != newTypeTyre)
                                         {
                                         addCost += 1000; 
@@ -455,22 +260,21 @@ namespace ServiceAvtoHome
                                         }
                                        
                                     }
-                                    ClearScreen();
-                                    Console.WriteLine("\nОпции на выбранной Вами машине:");
+                                    Console.Clear();
+                                    Console.WriteLine(masPhrases[33]);
                                     Console.WriteLine(options[tempIndex - 1].OptionComposition());
-                                    Console.WriteLine("Будете менять (да/нет)?");
-                                    choiseYN = Console.ReadLine();
-                                    if (choiseYN.ToUpper() == "ДА")
+                                    choiseYN = MenuString(masPhrases[27]);
+                                    if (choiseYN.ToUpper() == "НЕТ")
                                     { 
-                                         Console.WriteLine("\nИзменение наличия кондиционера - 500$");
-                                         newConditioner = NewConditioner();
+                                         Console.WriteLine(masPhrases[34]);
+                                         newConditioner = NewLineParametr(masPhrases[9], masYN);
                                          if (options[tempIndex - 1].conditioner != newConditioner)
                                          addCost += 500; 
                                          options[tempIndex - 1].conditioner = newConditioner;
                                          cars[tempIndex - 1].cost += addCost;
                                         
-                                         Console.WriteLine("\nИзменение наличия Зимнего пакета - 500$");
-                                         newHeat = NewHeat();
+                                         Console.WriteLine(masPhrases[35]);
+                                         newHeat = NewLineParametr(masPhrases[10], masYN);
                                          if (options[tempIndex - 1].heat != newHeat)
                                          {
                                          addCost += 500; 
@@ -478,8 +282,8 @@ namespace ServiceAvtoHome
                                          cars[tempIndex - 1].cost += addCost;
                                          }
                                         
-                                         Console.WriteLine("\nИзменение наличия навигация - 500$");
-                                         newNavigation = NewNavigation();
+                                         Console.WriteLine(masPhrases[36]);
+                                         newNavigation = NewLineParametr(masPhrases[11], masYN);
                                          if (options[tempIndex - 1].navigation != newNavigation)
                                          {
                                          addCost += 500; 
@@ -488,15 +292,11 @@ namespace ServiceAvtoHome
                                          }
                                         
                                     }
-                                    ClearScreen();
-                                    Console.WriteLine("\nВаш итоговый автомобиль:");
+                                    Console.Clear();
+                                    Console.WriteLine(masPhrases[37]);
                                     PrintAvto(tempIndex-1);
-                                    Console.WriteLine($"\n{user}, укажите как будете брать авто: \n1 - за наличные \n2 - в кредит");
-                                    choice = Convert.ToInt32(Console.ReadLine());
-                                    if (choice == 1)
-                                    {
-                                        Console.WriteLine("\nПроходите в кассу, расплачивайтесь. \nВтечение получаса мы подготовим Ваш автомобиль и выдадим его Вам. \nПоздравляем с покупкой!");
-                                    }
+                                    choice = NewNumberParametr(masPhrases[15], 1, 2);                                    
+                                    if (choice == 1) Console.WriteLine(masPhrases[18]+masPhrases[17]);                           
                                     else Credit();
                                     return;
                                 }
@@ -505,7 +305,7 @@ namespace ServiceAvtoHome
                         if (choice == 5) break;
                     }
                 }
-                if (user.ToUpper() == "СТОП") break;
+                if (choice==3) break;
             }
         }
     }

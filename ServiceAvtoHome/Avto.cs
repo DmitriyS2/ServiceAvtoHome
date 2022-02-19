@@ -19,10 +19,10 @@ namespace ServiceAvtoHome
         {
             return "\nНомер авто в каталоге " + i + "\nМарка "+ marka + "\nЦвет " + color + "\nТип кузова " + type + "\nГод выпуска " + yearEdition + "\nМощность " + power + " л.с.\nЦена " + cost + "$";
         }
+
         
-  
-  
-       
+
+
 
 
     }

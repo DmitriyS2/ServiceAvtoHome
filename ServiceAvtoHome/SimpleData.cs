@@ -2,7 +2,7 @@
 {
     internal static class SimpleData
     {
-        public static string? user, searchMarka, searchColor, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choiseYN, newLineParametr, searchParametr;
+        public static string? user, searchMarka, searchColor, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choiseYN, newLineParametr, searchParametr, newParametr;
         public static int choice, nomerAvto, counterCustomerAvto, borderA, borderB, tempIndex, newRadius, newNumberParametr;
         public static int size = 10;
 

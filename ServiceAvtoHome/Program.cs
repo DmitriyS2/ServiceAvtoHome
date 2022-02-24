@@ -42,7 +42,7 @@ namespace ServiceAvtoHome
         {             
             Console.Clear();
             size++;
-            cars.Add(new Avto { marka = CreateNewParametr(masPhrases[0], masMarka), type = CreateNewParametr(masPhrases[1], masType), color = CreateNewParametr(masPhrases[3], masColor), power = CreateNewParametr(masPhrases[4], 100, 300), yearEdition = CreateNewParametr(masPhrases[2], 2000, 2021), cost = CreateNewParametr(masPhrases[5], 10000, 30000) });
+            cars.Add(new CheapAvto { marka = CreateNewParametr(masPhrases[0], masMarka), type = CreateNewParametr(masPhrases[1], masType), color = CreateNewParametr(masPhrases[3], masColor), power = CreateNewParametr(masPhrases[4], 100, 300), yearEdition = CreateNewParametr(masPhrases[2], 2000, 2021), cost = CreateNewParametr(masPhrases[5], 10000, 30000) });
             wheels.Add(new Wheel { radius = CreateNewParametr(masPhrases[6], 16, 21), typeDisk = CreateNewParametr(masPhrases[7], masDisk), typeTyre = CreateNewParametr(masPhrases[8], masTyre) });
             options.Add(new Option { conditioner = CreateNewParametr(masPhrases[9], masYN), heat = CreateNewParametr(masPhrases[10], masYN), navigation = CreateNewParametr(masPhrases[11], masYN) });
             Console.WriteLine(masPhrases[38]);

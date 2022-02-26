@@ -8,6 +8,12 @@ namespace ServiceAvtoHome
 {
     internal class CheapAvto:Avto
     {
+        public event Action addAvto;
 
+        public void StartAdd()
+        {
+            addAvto?.Invoke();
+        }       
+        
     }
 }

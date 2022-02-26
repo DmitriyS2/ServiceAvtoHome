@@ -1,11 +1,12 @@
 ﻿using ServiceAvtoHome;
 using System;
 using static ServiceAvtoHome.SimpleData;
+using static ServiceAvtoHome.CheapAvto;
 
 namespace ServiceAvtoHome
 {
     class Program
-    {
+    {        
         public static int EnterInt(string phrase)
         {
             Console.WriteLine(phrase);
@@ -143,6 +144,8 @@ namespace ServiceAvtoHome
 
         static void Main(string[] args)
         {          
+            CheapAvto newAvto = new CheapAvto();
+            newAvto.addAvto += AddNewAvto;
             CreateCatalogAvto();            
             while (true)
             {
@@ -164,7 +167,7 @@ namespace ServiceAvtoHome
                             }
                             Pause();
                         }
-                        if (choice == 2) AddNewAvto();// добавить авто в каталог
+                        if (choice == 2) newAvto.StartAdd(); //AddNewAvto();// добавить авто в каталог
                         if (choice == 3) ChangeCost();// изменить цену авто
                         if (choice == 4)
                         {

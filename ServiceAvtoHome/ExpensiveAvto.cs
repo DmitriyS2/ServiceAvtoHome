@@ -8,6 +8,6 @@ namespace ServiceAvtoHome
 {
     internal class ExpensiveAvto:Avto
     {
-
+        public string raritet;
     }
 }

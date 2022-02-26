@@ -59,6 +59,7 @@
 
         };
         public static List<CheapAvto> cars = new();
+        
         public static List<Wheel> wheels = new();
         public static List<Option> options = new();
         public static List<Credit> credits = new();
@@ -88,6 +89,5 @@
 
             return credits;
         }
-
     }
 }

@@ -8,6 +8,8 @@ namespace ServiceAvtoHome
 {
     internal abstract class Avto
     {
+        
+                
         public string? color;
         public string? type;
         public int yearEdition;

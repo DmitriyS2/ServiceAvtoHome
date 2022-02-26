@@ -47,7 +47,7 @@ namespace ServiceAvtoHome
             wheels.Add(new Wheel { radius = CreateNewParametr(masPhrases[6], 16, 21), typeDisk = CreateNewParametr(masPhrases[7], masDisk), typeTyre = CreateNewParametr(masPhrases[8], masTyre) });
             options.Add(new Option { conditioner = CreateNewParametr(masPhrases[9], masYN), heat = CreateNewParametr(masPhrases[10], masYN), navigation = CreateNewParametr(masPhrases[11], masYN) });
             Console.WriteLine(masPhrases[38]);
-            PrintAvto(size-1);            
+            Avto.StartAdd(size-1);            
             Pause();
         }
 
@@ -144,8 +144,8 @@ namespace ServiceAvtoHome
 
         static void Main(string[] args)
         {          
-            CheapAvto newAvto = new CheapAvto();
-            newAvto.addAvto += AddNewAvto;
+            
+            Avto.addAvto += PrintAvto;
             CreateCatalogAvto();            
             while (true)
             {
@@ -167,7 +167,7 @@ namespace ServiceAvtoHome
                             }
                             Pause();
                         }
-                        if (choice == 2) newAvto.StartAdd(); //AddNewAvto();// добавить авто в каталог
+                        if (choice == 2) AddNewAvto();// добавить авто в каталог
                         if (choice == 3) ChangeCost();// изменить цену авто
                         if (choice == 4)
                         {

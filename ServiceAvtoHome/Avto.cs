@@ -8,8 +8,13 @@ namespace ServiceAvtoHome
 {
     internal abstract class Avto
     {
-        
-                
+        public static event Action<int> addAvto;
+
+        public static void StartAdd(int N)
+        {
+            addAvto?.Invoke(N);
+        }
+
         public string? color;
         public string? type;
         public int yearEdition;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceAvtoHome
 {
-    internal abstract class Avto
+    internal class Avto
     {
         public static event Action<int> addAvto;
 

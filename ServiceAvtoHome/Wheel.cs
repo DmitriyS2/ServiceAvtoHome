@@ -12,7 +12,7 @@ namespace ServiceAvtoHome
         public string? typeDisk; // тип диска - литье, штамп
         public string? typeTyre; // тип шины - зима,лето
 
-        public string WheelComposition() => "\nРадиус диска " + radius + "\nТип диска " + typeDisk + "\nСезонность резины " + typeTyre;        
+        public string WheelComposition() => "Радиус диска " + radius + "\nТип диска " + typeDisk + "\nСезонность резины " + typeTyre;        
     }
 }
 

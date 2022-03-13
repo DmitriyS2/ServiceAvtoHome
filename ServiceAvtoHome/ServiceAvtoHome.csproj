@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="CheapAvto.cs" />
+    <Compile Remove="ExpensiveAvto.cs" />
+    <Compile Remove="User.cs" />
+  </ItemGroup>
+
 </Project>

@@ -2,13 +2,12 @@
 {
     internal static class SimpleData
     {
-        public static string? user, searchMarka, searchColor, newTypeDisk, newTypeTyre, newConditioner, newHeat, newNavigation, choiseYN, newLineParametr, searchParametr, newParametr;
+        public static string? user, searchMarka, searchColor, choiseYN, newLineParametr, newParametr;
         public static int choice, nomerAvto, counterCustomerAvto, borderA, borderB, tempIndex, newRadius, newNumberParametr;
-        public static int size = 10;
-
+        public static int size = 10;        
         public static List<string> masMarka = new() { "FORD", "AUDI", "BMW", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "LEXUS", "FIAT", "RENAULT", "MERCEDES BENZ" };
-        public static List<string> masExpMarka = new() { "AUDI", "BMW", "LEXUS", "MERCEDES", "JAGUAR", "BENTLEY", "LAND ROVER", "PORSCHE", "INFINITI", "CADILLAC"};
-        public static List<string> masCheapMarka = new() { "FORD", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "FIAT", "RENAULT", };
+        //public static List<string> masExpMarka = new() { "AUDI", "BMW", "LEXUS", "MERCEDES", "JAGUAR", "BENTLEY", "LAND ROVER", "PORSCHE", "INFINITI", "CADILLAC" };
+        //public static List<string> masCheapMarka = new() { "FORD", "OPEL", "MAZDA", "LADA", "MITSUBISHI", "NISSAN", "TOYOTA", "FIAT", "RENAULT", };
         public static List<string> masType = new() { "СЕДАН", "ХЭТЧБЕК", "УНИВЕРСАЛ", "КУПЕ", "SUV" };
         public static List<string> masColor = new() { "БЕЛЫЙ", "ЧЕРНЫЙ", "СЕРЕБРИСТЫЙ", "КРАСНЫЙ", "СИНИЙ" };
         public static List<string> masYN = new() { "ДА", "НЕТ" };
@@ -58,24 +57,24 @@
             "\nДобавлена новая машина в каталог",
 
         };
-        public static List<CheapAvto> cars = new();
-        
+        public static List<Avto> cars = new();
         public static List<Wheel> wheels = new();
         public static List<Option> options = new();
         public static List<Credit> credits = new();
         private static Random rand = new();
 
-        public static List<CheapAvto> CreateCatalogAvto()
+        public static List<Avto> CreateCatalogAvto()
         {
             for (int i = 0; i < size; i++)
             {
-                cars.Add(new CheapAvto { marka = masMarka[rand.Next(0, 12)], color = masColor[rand.Next(0, 4)], type = masType[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021), power = rand.Next(2, 6) * 50, cost = rand.Next(10, 30) * 1000 });
+                cars.Add(new Avto { marka = masMarka[rand.Next(0, 12)], color = masColor[rand.Next(0, 4)], type = masType[rand.Next(0, 4)], yearEdition = rand.Next(2000, 2021), power = rand.Next(2, 6) * 50, cost = rand.Next(10, 30) * 1000 });
                 wheels.Add(new Wheel { radius = 16, typeTyre = masTyre[1], typeDisk = masDisk[1] });
                 options.Add(new Option { conditioner = masYN[1], heat = masYN[1], navigation = masYN[1] });
+
             }
             return cars;
         }
-
+              
         public static List<Credit> CreateCredit(int cost)
         {
             for (int i = 0; i < 3; i++)
@@ -86,7 +85,6 @@
                 for (int j = 1; j < credits[i].periodCredit; j++) credits[i].totalCredit = credits[i].totalCredit * (100 + credits[i].rate) / 100;
                 credits[i].payment = credits[i].totalCredit / credits[i].periodCredit / 12;
             }
-
             return credits;
         }
     }

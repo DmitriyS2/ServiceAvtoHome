@@ -12,6 +12,6 @@ namespace ServiceAvtoHome
         public string? heat; // подогрев
         public string? navigation; // навигация
 
-        public string OptionComposition() => "\nКондиционер " + conditioner + "\nЗимний пакет " + heat + "\nСистема навигации " + navigation + "\n";
+        public string OptionComposition() => "Кондиционер " + conditioner + "\nЗимний пакет " + heat + "\nСистема навигации " + navigation + "\n";
     }
 }
